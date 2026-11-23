@@ -147,10 +147,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .village-detail { margin-bottom: 14px; }
 .village-detail-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 17px 12px; }
 .village-detail-head .eyebrow { margin-bottom: 5px; }
-.village-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #edf0ef; }
+.village-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid #edf0ef; }
 .village-metrics article { min-width: 0; display: grid; align-content: start; gap: 6px; padding: 13px 15px; border-right: 1px solid #edf0ef; }
-.village-metrics article:nth-child(4n) { border-right: 0; }
-.village-metrics article:nth-child(n + 5) { border-top: 1px solid #edf0ef; }
+.village-metrics article:nth-child(2n) { border-right: 0; }
 .village-metrics article > span { overflow: hidden; color: #859298; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 .village-metrics article > strong { overflow: hidden; color: #344d48; font-size: 15px; letter-spacing: -.025em; text-overflow: ellipsis; white-space: nowrap; }
 .village-metrics article > small { color: #9aa5a9; font-size: 8px; }
@@ -231,7 +230,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .leaflet-container a { color: #176f60; }
 .leaflet-popup-content-wrapper { border-radius: 9px; }
 .leaflet-popup-content { font-size: 11px; line-height: 1.6; }
-.umkm-map-description { display: inline-block; max-width: 240px; white-space: normal; }
+.ikm-map-description { display: inline-block; max-width: 240px; white-space: normal; }
 .leaflet-div-icon.point-marker-icon { border: 0; background: transparent; }
 .point-marker-icon span { display: block; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 50%; background: #8464ce; box-shadow: 0 1px 5px #172a2a80; }
 .point-marker-icon--mikro span { background: #e58d3f; }
@@ -301,10 +300,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .main-content { padding-right: 22px; padding-left: 22px; }
   .summary-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .village-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .village-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .village-metrics article:nth-child(4n) { border-right: 1px solid #edf0ef; }
-  .village-metrics article:nth-child(3n) { border-right: 0; }
-  .village-metrics article:nth-child(n + 4) { border-top: 1px solid #edf0ef; }
+  .village-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-card { min-height: 76px; }
   .heading-actions { flex-wrap: wrap; justify-content: flex-end; }
   .sync-status { display: none; }
@@ -320,9 +316,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .sidebar-heading { align-items: center; padding: 0 2px 10px; }
   .sidebar-heading .eyebrow { margin-bottom: 3px; }
   .sidebar-heading h1 { font-size: 14px; }
-  .sidebar-nav { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
-  .sidebar-nav--public { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .sidebar-nav--admin { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .sidebar-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .sidebar-nav--public { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .nav-item { min-height: 42px; flex-direction: column; justify-content: center; gap: 3px; padding: 5px 2px; font-size: 9px; text-align: center; }
   .nav-item > span:nth-child(2) { flex: none; }
   .nav-count { display: none; }
@@ -339,9 +334,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .village-directory-head .records-count { display: none; }
   .village-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .village-metrics article { padding: 11px; border-top: 1px solid #edf0ef; }
-  .village-metrics article:nth-child(3n) { border-right: 1px solid #edf0ef; }
   .village-metrics article:nth-child(2n) { border-right: 0; }
-  .village-metrics article:last-child { border-right: 0; }
   .village-detail-head { align-items: flex-start; padding: 13px; }
   .village-detail-head .button { flex: 0 0 auto; }
   .summary-card { min-height: 69px; gap: 7px; padding: 9px; }

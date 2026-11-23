@@ -22,7 +22,7 @@ export type MapPoint = {
   updated_at: string;
 };
 
-export type UmkmRecord = {
+export type IkmRecord = {
   id: string;
   user_id: string;
   village_code: string;
@@ -37,7 +37,7 @@ export type UmkmRecord = {
   updated_at: string;
 };
 
-export type UmkmBusinessTypeRecord = {
+export type IkmBusinessTypeRecord = {
   id: string;
   user_id: string;
   village_code: string;
@@ -85,14 +85,14 @@ export type Database = {
         Partial<Omit<MapPoint, "id" | "user_id" | "created_at" | "updated_at">>
       >;
       umkm_records: Table<
-        UmkmRecord,
-        Omit<UmkmRecord, "id" | "user_id" | "updated_at">,
-        Partial<Omit<UmkmRecord, "id" | "user_id" | "updated_at">>
+        IkmRecord,
+        Omit<IkmRecord, "id" | "user_id" | "updated_at">,
+        Partial<Omit<IkmRecord, "id" | "user_id" | "updated_at">>
       >;
       umkm_business_type_records: Table<
-        UmkmBusinessTypeRecord,
-        Omit<UmkmBusinessTypeRecord, "id" | "user_id" | "updated_at">,
-        Partial<Omit<UmkmBusinessTypeRecord, "id" | "user_id" | "updated_at">>
+        IkmBusinessTypeRecord,
+        Omit<IkmBusinessTypeRecord, "id" | "user_id" | "updated_at">,
+        Partial<Omit<IkmBusinessTypeRecord, "id" | "user_id" | "updated_at">>
       >;
       economy_records: Table<
         EconomyRecord,

@@ -4,23 +4,19 @@ import { useEffect } from "react";
 import * as L from "leaflet";
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
 import type { Feature, Geometry } from "geojson";
-import type { MapPoint, UmkmRecord } from "@/lib/database.types";
-import { categoryLabels, type VillageCollection, type VillageProperties } from "@/lib/validation";
+import type { IkmRecord } from "@/lib/database.types";
+import { type VillageCollection, type VillageProperties } from "@/lib/validation";
 
 interface MapCanvasProps {
   villages: VillageCollection | null;
-  points: MapPoint[];
-  umkm: UmkmRecord[];
+  ikm: IkmRecord[];
   villageByCode: ReadonlyMap<string, VillageProperties>;
-  canEdit: boolean;
-  onMovePoint: (id: string, lat: number, lng: number) => Promise<boolean>;
   selectedVillageCode?: string | null;
 }
 
-const umkmCategories = [
-  { field: "micro", descriptionField: "description_micro", category: "mikro", label: "Mikro", offset: -16 },
-  { field: "small", descriptionField: "description_small", category: "kecil", label: "Kecil", offset: 0 },
-  { field: "medium", descriptionField: "description_medium", category: "menengah", label: "Menengah", offset: 16 },
+const ikmCategories = [
+  { field: "small", descriptionField: "description_small", category: "kecil", label: "Kecil", offset: -8 },
+  { field: "medium", descriptionField: "description_medium", category: "menengah", label: "Menengah", offset: 8 },
 ] as const;
 
 function FitMbdBounds({
@@ -45,17 +41,14 @@ function FitMbdBounds({
 
 export default function MbdMap({
   villages,
-  points,
-  umkm,
+  ikm,
   villageByCode,
-  canEdit,
-  onMovePoint,
   selectedVillageCode = null,
 }: MapCanvasProps) {
-  const latestUmkmByVillage = new Map<string, UmkmRecord>();
-  for (const record of umkm) {
-    const current = latestUmkmByVillage.get(record.village_code);
-    if (!current || record.year > current.year) latestUmkmByVillage.set(record.village_code, record);
+  const latestIkmByVillage = new Map<string, IkmRecord>();
+  for (const record of ikm) {
+    const current = latestIkmByVillage.get(record.village_code);
+    if (!current || record.year > current.year) latestIkmByVillage.set(record.village_code, record);
   }
 
   return (
@@ -98,64 +91,26 @@ export default function MbdMap({
         </>
       )}
 
-      {/* RENDER POIN / MARKER */}
-      {points.map((point) => {
-        const village = villageByCode.get(point.village_code);
-        return (
-          <Marker
-            key={point.id}
-            position={[point.lat, point.lng]}
-            icon={pointIcon(point.category)}
-            // KUNCI KEAMANAN: Pengunjung tidak bisa menggeser marker (draggable bernilai false jika canEdit = false)
-            draggable={canEdit}
-            eventHandlers={{
-              dragend: (event) => {
-                if (!canEdit) return; // Mencegah pengunjung memindahkan data
-                const marker = event.target as L.Marker;
-                const { lat, lng } = marker.getLatLng();
-                void onMovePoint(point.id, lat, lng).then((saved) => {
-                  if (!saved) marker.setLatLng([point.lat, point.lng]);
-                });
-              },
-            }}
-          >
-            <Tooltip direction="top">{point.name}</Tooltip>
-            
-            {/* POPUP YANG BERSIH: Hanya menampilkan informasi dan aman dari tombol hapus/edit */}
-            <Popup>
-              <div style={{ fontFamily: 'sans-serif' }}>
-                <strong>{point.name}</strong>
-                <br />{village?.name ?? point.village_code} · {categoryLabels[point.category]}
-                {point.value != null && <><br />Nilai: {new Intl.NumberFormat("id-ID").format(point.value)}</>}
-                {/* Tidak ada tombol Hapus atau Edit di sini untuk pengunjung */}
-              </div>
-            </Popup>
-          </Marker>
-        );
-      })}
-
-      {/* RENDER UMKM */}
-      {[...latestUmkmByVillage.values()].flatMap((record) => {
+      {[...latestIkmByVillage.values()].flatMap((record) => {
         const village = villageByCode.get(record.village_code);
         if (!village) return [];
-        return umkmCategories
+        return ikmCategories
           .filter(({ field }) => record[field] > 0)
           .map(({ field, descriptionField, category, label, offset }) => (
             <Marker
-              key={`umkm-${record.village_code}-${category}`}
+              key={`ikm-${record.village_code}-${category}`}
               position={village.label}
-              icon={pointIcon(category, offset)}
+              icon={ikmIcon(category, offset)}
               zIndexOffset={offset}
             >
-              <Tooltip direction="top">{village.name} · UMKM {label}</Tooltip>
+              <Tooltip direction="top">{village.name} · IKM {label}</Tooltip>
               
-              {/* POPUP UMKM: Hanya info murni */}
               <Popup>
                 <div style={{ fontFamily: 'sans-serif' }}>
-                  <strong>UMKM {label} · {new Intl.NumberFormat("id-ID").format(record[field])} usaha</strong>
+                  <strong>IKM {label} · {new Intl.NumberFormat("id-ID").format(record[field])} usaha</strong>
                   <br />{village.name} · {village.kecamatan}
                   <br />Tahun data: {record.year}
-                  {record[descriptionField] && <><br /><span className="umkm-map-description">{record[descriptionField]}</span></>}
+                  {record[descriptionField] && <><br /><span className="ikm-map-description">{record[descriptionField]}</span></>}
                   {/* Tidak ada tombol Hapus atau Edit di sini untuk pengunjung */}
                 </div>
               </Popup>
@@ -173,7 +128,7 @@ function districtColor(code: string): string {
   return colors[Math.abs(hash) % colors.length];
 }
 
-function pointIcon(category: MapPoint["category"], horizontalOffset = 0): L.DivIcon {
+function ikmIcon(category: "kecil" | "menengah", horizontalOffset = 0): L.DivIcon {
   return L.divIcon({
     className: `point-marker-icon point-marker-icon--${category}`,
     html: "<span></span>",

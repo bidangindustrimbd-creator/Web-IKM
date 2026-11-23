@@ -36,7 +36,7 @@ export const pointSchema = z.object({
   description: z.string().trim().max(500, "Keterangan maksimal 500 karakter."),
 });
 
-export const umkmSchema = z.object({
+export const ikmSchema = z.object({
   village_code: cleanText(20, "Desa"),
   year: z.coerce.number().int().min(2000).max(new Date().getFullYear() + 1),
   micro: nonNegativeNumber("Usaha mikro", true),
@@ -66,7 +66,7 @@ export const businessTypeFields = [
   { field: "creative_digital", label: "Ekonomi Kreatif & Digital" },
 ] as const;
 
-export const umkmBusinessTypeSchema = z.object({
+export const ikmBusinessTypeSchema = z.object({
   village_code: cleanText(20, "Desa"),
   year: z.coerce.number().int().min(2000).max(new Date().getFullYear() + 1),
   culinary: nonNegativeNumber("Kuliner atau Makanan dan Minuman", true),
@@ -80,9 +80,9 @@ export const umkmBusinessTypeSchema = z.object({
 });
 
 export type PointInput = z.infer<typeof pointSchema>;
-export type UmkmInput = z.infer<typeof umkmSchema>;
+export type IkmInput = z.infer<typeof ikmSchema>;
 export type EconomyInput = z.infer<typeof economySchema>;
-export type UmkmBusinessTypeInput = z.infer<typeof umkmBusinessTypeSchema>;
+export type IkmBusinessTypeInput = z.infer<typeof ikmBusinessTypeSchema>;
 
 export const categoryLabels: Record<PointCategory, string> = {
   mikro: "Mikro",

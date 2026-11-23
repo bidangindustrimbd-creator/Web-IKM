@@ -40,13 +40,13 @@ create policy "Admins manage shared points"
   using ((select public.is_app_admin()))
   with check ((select public.is_app_admin()));
 
-drop policy if exists "Users manage their own IKM records" on public.umkm_records;
-drop policy if exists "Anyone can read shared IKM records" on public.umkm_records;
-drop policy if exists "Admins manage shared IKM records" on public.umkm_records;
-create policy "Anyone can read shared IKM records"
+drop policy if exists "Users manage their own UMKM records" on public.umkm_records;
+drop policy if exists "Anyone can read shared UMKM records" on public.umkm_records;
+drop policy if exists "Admins manage shared UMKM records" on public.umkm_records;
+create policy "Anyone can read shared UMKM records"
   on public.umkm_records for select to anon, authenticated
   using (true);
-create policy "Admins manage shared IKM records"
+create policy "Admins manage shared UMKM records"
   on public.umkm_records for all to authenticated
   using ((select public.is_app_admin()))
   with check ((select public.is_app_admin()));

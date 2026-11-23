@@ -44,14 +44,3 @@ export function parseCsv(text: string): string[][] {
   if (row.some((cell) => cell.trim() !== "")) rows.push(row);
   return rows;
 }
-
-export function serializeCsv(rows: string[][]): string {
-  const csvCell = (value: string) => {
-    const safeValue = /^[\u0000-\u0020]*[=+\-@]/.test(value) ? `'${value}` : value;
-    return /[",\r\n]/.test(safeValue)
-      ? `"${safeValue.replace(/"/g, '""')}"`
-      : safeValue;
-  };
-
-  return rows.map((row) => row.map(csvCell).join(",")).join("\r\n");
-}

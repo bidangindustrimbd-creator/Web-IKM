@@ -173,8 +173,8 @@ create policy "Users manage their own points"
   on public.map_points for all to authenticated
   using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
-drop policy if exists "Users manage their own IKM records" on public.umkm_records;
-create policy "Users manage their own IKM records"
+drop policy if exists "Users manage their own UMKM records" on public.umkm_records;
+create policy "Users manage their own UMKM records"
   on public.umkm_records for all to authenticated
   using (auth.uid() = user_id) with check (auth.uid() = user_id);
 

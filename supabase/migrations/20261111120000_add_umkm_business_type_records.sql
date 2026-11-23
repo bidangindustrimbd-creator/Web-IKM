@@ -26,11 +26,11 @@ for each row execute function public.touch_updated_at();
 
 alter table public.umkm_business_type_records enable row level security;
 
-drop policy if exists "Admins manage shared IKM business types"
+drop policy if exists "Admins manage shared UMKM business types"
   on public.umkm_business_type_records;
-drop policy if exists "Anyone can read shared IKM business types"
+drop policy if exists "Anyone can read shared UMKM business types"
   on public.umkm_business_type_records;
-create policy "Admins manage shared IKM business types"
+create policy "Admins manage shared UMKM business types"
   on public.umkm_business_type_records for all to authenticated
   using ((select public.is_app_admin()))
   with check ((select public.is_app_admin()));
